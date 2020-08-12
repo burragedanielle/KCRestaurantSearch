@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input id="latitude-input" type="text"></input>
+    <input id="longitude-input" type="text"></input>
+    <button id="submit" type="submit">I am a button</button>
+
+    <script>
+
+        var latitudeSubmit = document.querySelector('#latitude-input');
+        var longitudeSubmit = document.querySelector('#longitude-input');
+
+        const endpoint = '';
+
+        var button = document.querySelector('#submit');
+        button.addEventListener('click', () => {
+            console.log('I have been clicked');
+            console.log(latitudeSubmit.value);
+            console.log(longitudeSubmit.value);
+
+            createEndpoint();
+        })
+
+        function createEndpoint() {
+            const latitude = latitudeSubmit.value;
+            const longitude = longitudeSubmit.value;
+            console.log(latitudeSubmit.value);
+            runEndPoint(latitude, longitude);
+        }
+
+        const response = [];
+
+        function runEndPoint(latitude, longitude) {
+
+            console.log(latitude, longitude);
+
+            const endpoint = `https://tripadvisor1.p.rapidapi.com/restaurants/list-by-latlng?limit=30&currency=USD&distance=2&lunit=km&lang=en_US&latitude=${latitude}&longitude=${longitude}`;
+
+            fetch(endpoint, {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
+                    "x-rapidapi-key": "13571b75f3msh332ca70c528769bp188035jsn4a7558a7e4eb"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+    </script>
+
+</body>
+
+</html>
